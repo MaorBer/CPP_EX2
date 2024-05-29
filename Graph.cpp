@@ -14,15 +14,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> graph)
         throw invalid_argument("Invalid graph: The graph is empty.");
     }
 
-    size_t n = graph.size(); // Assuming the graph is square
-    for (size_t i = 0; i < n; ++i)
-    {
-        if (graph[i].size() != n)
-        {
-            throw invalid_argument("Invalid graph: The graph is not a square matrix.");
-        }
-    }
-
+    size_t n = graph.size(); 
     g = graph;
     vertex_counter = n;
 
@@ -63,9 +55,20 @@ void Graph::loadGraph(std::vector<std::vector<int>> graph)
     }
 }
 
-void Graph::printGraph()
+string Graph::printGraph()
 {
-    std::cout << "Graph with " << vertex_counter << " vertices and " << edge_counter << " edges." << std::endl;
+    string os = "";
+    size_t n = this->get_ver();
+    for (size_t i = 0; i < n; ++i)
+    {
+        os += "[";
+        for (size_t j = 0; j < n; ++j)
+        {
+            os = this->weight(i, j) + " ";
+        }
+        os += "]";
+    }
+    return os;
 }
 
 int Graph::weight(size_t s, size_t t)
@@ -95,7 +98,6 @@ bool Graph::isSymmetrical()
 }
 
 // OPERATORS =========================================================================
-
 
 size_t Graph::countEdges() const
 {
@@ -140,7 +142,6 @@ Graph &Graph::operator--()
     return *this;
 }
 
-
 bool Graph::operator>(const Graph &other) const
 {
     // Compare the number of edges in the graphs
@@ -179,6 +180,14 @@ bool Graph::operator!=(const Graph &other) const
 
 Graph Graph::operator+(const Graph &other) const
 {
+    if (this->g.size() != other.g.size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
+    else if(this->g[0].size() != other.g[0].size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
     // Perform element-wise addition of the adjacency matrices
     Graph result = *this;
     for (size_t i = 0; i < g.size(); ++i)
@@ -193,6 +202,14 @@ Graph Graph::operator+(const Graph &other) const
 
 Graph &Graph::operator+=(const Graph &other)
 {
+    if (this->g.size() != other.g.size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
+    else if(this->g[0].size() != other.g[0].size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
     // Perform in-place element-wise addition of the adjacency matrices
     for (size_t i = 0; i < g.size(); ++i)
     {
@@ -212,6 +229,14 @@ Graph Graph::operator+() const
 
 Graph Graph::operator-(const Graph &other) const
 {
+    if (this->g.size() != other.g.size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
+    else if(this->g[0].size() != other.g[0].size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
     // Perform element-wise subtraction of the adjacency matrices
     Graph result = *this;
     for (size_t i = 0; i < g.size(); ++i)
@@ -226,6 +251,14 @@ Graph Graph::operator-(const Graph &other) const
 
 Graph &Graph::operator-=(const Graph &other)
 {
+    if (this->g.size() != other.g.size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
+    else if(this->g[0].size() != other.g[0].size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
     // Perform in-place element-wise subtraction of the adjacency matrices
     for (size_t i = 0; i < g.size(); ++i)
     {
@@ -251,12 +284,16 @@ Graph Graph::operator-() const
     return result;
 }
 
-namespace ariel {
-    ostream &operator<<(ostream &os, Graph &g) {
+namespace ariel
+{
+    ostream &operator<<(ostream &os, Graph &g)
+    {
         size_t n = g.get_ver();
-        for (size_t i = 0; i < n; ++i) {
+        for (size_t i = 0; i < n; ++i)
+        {
             os << "[";
-            for (size_t j = 0; j < n; ++j) {
+            for (size_t j = 0; j < n; ++j)
+            {
                 os << g.weight(i, j) << " ";
             }
             os << "]";
@@ -281,6 +318,7 @@ Graph &Graph::operator*=(int scalar)
 
 Graph &Graph::operator/=(int scalar)
 {
+    
     // Divide all edge weights by the scalar
     for (auto &row : g)
     {
@@ -294,14 +332,20 @@ Graph &Graph::operator/=(int scalar)
 
 Graph Graph::operator*(const Graph &other)
 {
-    // Perform element-wise multiplication of the adjacency matrices
-    Graph result = *this;
+    if (this->g.size() != other.g.size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
+    else if(this->g[0].size() != other.g[0].size())
+    {
+        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
+    }
     for (size_t i = 0; i < g.size(); ++i)
     {
         for (size_t j = 0; j < g[i].size(); ++j)
         {
-            result.g[i][j] *= other.g[i][j];
+            this->g[i][j] *= other.g[i][j];
         }
     }
-    return result;
+    return *this;
 }

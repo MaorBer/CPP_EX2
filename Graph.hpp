@@ -20,7 +20,7 @@ namespace ariel
 
     public:
         void loadGraph(std::vector<std::vector<int>> g);
-        void printGraph();
+        string printGraph(); // addapted to ex2
         int weight(size_t s, size_t t);
         size_t get_ver();
         bool isSymmetrical(); // If the Graph isSymmetrical then it is an undirected Graph
@@ -30,7 +30,7 @@ namespace ariel
 
         // OPERATORS
 
-        friend ostream &operator<<(ostream &os, Graph &g);
+        friend ostream &operator<<(ostream &os, const Graph &g);
 
         Graph &operator++();
 
