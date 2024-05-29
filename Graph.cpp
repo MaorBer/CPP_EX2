@@ -251,6 +251,21 @@ Graph Graph::operator-() const
     return result;
 }
 
+namespace ariel {
+    ostream &operator<<(ostream &os, Graph &g) {
+        size_t n = g.get_ver();
+        for (size_t i = 0; i < n; ++i) {
+            os << "[";
+            for (size_t j = 0; j < n; ++j) {
+                os << g.weight(i, j) << " ";
+            }
+            os << "]";
+            os << std::endl;
+        }
+        return os;
+    }
+}
+
 Graph &Graph::operator*=(int scalar)
 {
     // Multiply all edge weights by the scalar

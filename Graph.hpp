@@ -30,6 +30,8 @@ namespace ariel
 
         // OPERATORS
 
+        friend ostream &operator<<(ostream &os, Graph &g);
+
         Graph &operator++();
 
         // Decrement operator (--)
@@ -80,23 +82,6 @@ namespace ariel
         // Multiply two graphs element-wise
         Graph operator*(const Graph &other);
     };
-}
-
-using namespace ariel;
-ostream &operator<<(std::ostream &os, Graph &g)
-{
-    size_t n = g.get_ver();
-    for (size_t i = 0; i < n; ++i)
-    {
-        os << "[";
-        for (size_t j = 0; j < n; ++j)
-        {
-            os << g.weight(i, j) << " ";
-        }
-        os << "]";
-        os << std::endl;
-    }
-    return os;
 }
 
 #endif
