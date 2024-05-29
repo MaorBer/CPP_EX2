@@ -14,7 +14,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> graph)
         throw invalid_argument("Invalid graph: The graph is empty.");
     }
 
-    size_t n = graph.size(); 
+    size_t n = graph.size();
     g = graph;
     vertex_counter = n;
 
@@ -64,9 +64,9 @@ string Graph::printGraph()
         os += "[";
         for (size_t j = 0; j < n; ++j)
         {
-            os = this->weight(i, j) + " ";
+            os += to_string(this->weight(i, j)) + " "; // Convert integer to string
         }
-        os += "]";
+        os += "]\n"; // Append newline after each row
     }
     return os;
 }
@@ -184,7 +184,7 @@ Graph Graph::operator+(const Graph &other) const
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
-    else if(this->g[0].size() != other.g[0].size())
+    else if (this->g[0].size() != other.g[0].size())
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
@@ -206,7 +206,7 @@ Graph &Graph::operator+=(const Graph &other)
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
-    else if(this->g[0].size() != other.g[0].size())
+    else if (this->g[0].size() != other.g[0].size())
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
@@ -233,7 +233,7 @@ Graph Graph::operator-(const Graph &other) const
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
-    else if(this->g[0].size() != other.g[0].size())
+    else if (this->g[0].size() != other.g[0].size())
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
@@ -255,7 +255,7 @@ Graph &Graph::operator-=(const Graph &other)
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
-    else if(this->g[0].size() != other.g[0].size())
+    else if (this->g[0].size() != other.g[0].size())
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
@@ -318,7 +318,7 @@ Graph &Graph::operator*=(int scalar)
 
 Graph &Graph::operator/=(int scalar)
 {
-    
+
     // Divide all edge weights by the scalar
     for (auto &row : g)
     {
@@ -332,20 +332,30 @@ Graph &Graph::operator/=(int scalar)
 
 Graph Graph::operator*(const Graph &other)
 {
-    if (this->g.size() != other.g.size())
+    // Check if the number of columns in the first matrix is equal to the number of rows in the second matrix
+    if (this->g.size() != other.g[0].size())
     {
         throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
     }
-    else if(this->g[0].size() != other.g[0].size())
+
+    // Create a temporary matrix to store the result of multiplication
+    vector<vector<int>> result(this->g.size(), vector<int>(other.g[0].size(), 0));
+
+    // Perform matrix multiplication
+    for (size_t i = 0; i < this->g.size(); ++i)
     {
-        throw invalid_argument("The number of columns in the first matrix must be equal to the number of rows in the second matrix.");
-    }
-    for (size_t i = 0; i < g.size(); ++i)
-    {
-        for (size_t j = 0; j < g[i].size(); ++j)
+        for (size_t j = 0; j < other.g[0].size(); ++j)
         {
-            this->g[i][j] *= other.g[i][j];
+            for (size_t k = 0; k < other.g.size(); ++k)
+            {
+                result[i][j] += this->g[i][k] * other.g[k][j];
+            }
         }
     }
-    return *this;
+
+    // Create a new Graph object to store the result
+    Graph resultGraph;
+    resultGraph.loadGraph(result);
+
+    return resultGraph;
 }
