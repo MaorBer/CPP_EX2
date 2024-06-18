@@ -22,7 +22,7 @@ void Graph::loadGraph(std::vector<std::vector<int>> graph)
     edge_counter = 0;
 
     // Detect if the graph is directed or not
-    bool hasDirectedEdge = false;
+    dir = false; // Assume the graph is undirected initially
     for (size_t i = 0; i < n; ++i)
     {
         for (size_t j = 0; j < n; ++j)
@@ -30,20 +30,18 @@ void Graph::loadGraph(std::vector<std::vector<int>> graph)
             if (graph[i][j] != 0)
             {
                 edge_counter++;
-                if (i != j && graph[j][i] != 0) // Undirected edge
+                if (i != j && graph[j][i] == 0) // Directed edge
                 {
-                    dir = false;
-                }
-                else // Directed edge
-                {
-                    hasDirectedEdge = true;
+                    dir = true; // If there's any directed edge, the graph is directed
+                    break;
                 }
             }
         }
+        if (dir) // If the graph is directed, no need to check further
+        {
+            break;
+        }
     }
-
-    // If the graph has directed edges but no undirected edges, consider it directed
-    dir = hasDirectedEdge || dir;
 
     // If the graph is directed, ensure self-loops are removed
     if (dir)
@@ -284,20 +282,38 @@ Graph Graph::operator-() const
     return result;
 }
 
+// namespace ariel
+// {
+//     ostream &operator<<(ostream &os, Graph &g)
+//     {
+//         size_t n = g.get_ver();
+//         for (size_t i = 0; i < n; ++i)
+//         {
+//             os << "[";
+//             for (size_t j = 0; j < n; ++j)
+//             {
+//                 os << g.weight(i, j) << " ";
+//             }
+//             os << "]";
+//             os << std::endl;
+//         }
+//         return os;
+//     }
+// }
+
 namespace ariel
 {
-    ostream &operator<<(ostream &os, Graph &g)
+    ostream &operator<<(ostream &os, const Graph &g)
     {
-        size_t n = g.get_ver();
-        for (size_t i = 0; i < n; ++i)
+        // Your code to output the Graph object 'g' goes here.
+        // For example, you might want to print out the adjacency matrix:
+        for (const auto &row : g.g)
         {
-            os << "[";
-            for (size_t j = 0; j < n; ++j)
+            for (int val : row)
             {
-                os << g.weight(i, j) << " ";
+                os << val << ' ';
             }
-            os << "]";
-            os << std::endl;
+            os << '\n';
         }
         return os;
     }
