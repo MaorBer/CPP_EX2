@@ -1,23 +1,47 @@
-# מטלה 2 - גרפים והעמסת אופרטורים
+# Graph Operations and Algorithms User Guide
 
-במטלה הקודמת מימשתם את המחלקה `Graph.cpp` המאפשרת ייצוג של גרפים בעזרת מטריצת שכנויות. במטלה הזאת, אתם תרחיבו את המחלקה ותוסיפו תמיכה באופרטורים חשבוניים על גרפים.
-כאמור, הגרפים מיוצגים בעזרת מטריצת שכנויות, לכן כל האופרטורים צריכים להיות חוקיים עבור מטריצות (כמו שלמדתם בקורס אלגברה לינארית).
+## Overview
 
-אתם תצטרכו להוסיף את האופרטורים הבאים:
+Welcome to the Graph Operations and Algorithms repository, an extension of Task 1 in the System Programming 2 course at Ariel University. This assignment focuses on implementing operators and extending graph functionality using C++. The repository includes a Graph class with support for various operations and algorithms commonly used in graph theory.
 
-- שישה אופרטורים חשבוניים: חיבור (+) הוספה (+=) פלוס אונרי (+), ושלושת האופרטורים המקבילים לחיסור (-). כאמור, חיבור/חיסור של שתי מטריצות מוגדר רק על מטריצות מאותו סדר גודל nXn. ניסיון לחבר/לחסר שתי מטריצות שלא מקיימות תנאי זה יגרום לזריקת שגיאה.
-- שישה אופרטורי השוואה: גדול, גדול-או-שווה, קטן, קטן-או-שווה, שווה, לא-שווה. לשם מטלה זו כללי השוואת גרפים הם כדלקמן:
+## Assignment Details
 
-  1. גרפים G1 ו-G2 ייקראו שווים אם הם מאותו סדר גודל ומכילים את אותן הצלעות (והמשקלים של הצלעות זהים) או אם G1 לא גדול מ-G2 וגם G2 לא גדול מ-G1.
-  2. גרף G2 גדול מגרף G1 אם הגרף G1 מוכל ממש בגרף G2. אם אף גרף לא מוכל ממש בשני והגרפים לא שווים, אז גרף G2 גדול מגרף G1 אם מספר הצלעות ב-G2 גדול ממספר הצלעות ב-G1. אם בכל זאת מספר הצלעות זהה, אז הגרף G2 גדול מהגרף G1 אם המטריצה המייצגת של G2 בעלת סדר גודל גבוה יותר משל G1.
+### Graph Class
 
-- הגדלה ב-1 (++) והקטנה ב-1 (--) לפני ואחרי המספר. פעולה זו תגדיל או תקטין ב-1 את כל המשקלים של הצלעות בגרף.
-- הכפלה בסקלר שלם (`int`) - מכפיל את המשקל של כל הצלעות.
-- הכפלת גרפים - אנחנו מגדירים את פעולת הכפל בין גרף G1 לגרף G2 על ידי מכפלה של המטריצות המייצגות של שני הגרפים. התוצאה צריכה להיות מטריצה המייצגת גרף. ניסיון לבצע כפל בין גרפים בגדלים שונים צריך לזרוק שגיאה.
-- אופרטור פלט - הדפסה הגיונית של הגרף (צורת ההפדסה היא לשיקולכם).
+The core of this repository is the `Graph` class, implemented in `Graph.hpp` and `Graph.cpp`. Originally developed in Task 1, the Graph class utilizes an adjacency matrix to represent graphs and supports operations such as loading a graph, printing it, accessing weights between vertices, and checking graph properties.
 
+### Operator Implementations
 
-כמו כן, עליכם לכלול גם את הקובץ `Algorithms.cpp` מהמטלה הקודמת ולראות כיצד הפונקציות שהגדרתם בפעם הקודמת משתנות עכשיו. בנוסף לקבצים של המטלה אתם נדרשים להגיש גם קובץ README המתאר את אופן המימוש ואת החלוקה שביצעתם בקוד (סוג של מדריך משתמש).
-עליכם לכתוב בתחילת כל קובץ את מספר תעודת הזהות שלכם ואת המייל. אי עמידה בהנחיות תגרור הפחתה בציון.
-בהצלחה!
+In Task 2, we extended the Graph class to include operator overloads. These operators are designed to work on adjacency matrices of graphs, allowing arithmetic operations (addition, subtraction, multiplication, etc.) and comparison operations (greater than, less than, equality, etc.) between graphs. This extension enhances the utility of the Graph class, enabling intuitive manipulation and comparison of graph structures.
 
+### Algorithms
+
+The repository also includes implementations of several fundamental graph algorithms in `Algorithms.cpp`. These algorithms leverage the capabilities of the Graph class and include:
+
+- **Bellman-Ford Algorithm**: Computes shortest paths from a source vertex to all other vertices, handling negative weights.
+- **Connectivity Check**: Determines if the graph is connected.
+- **Shortest Path**: Finds the shortest path between two vertices.
+- **Cycle Detection**: Detects cycles in the graph.
+- **Bipartiteness Check**: Checks if the graph is bipartite.
+- **Negative Cycle Detection**: Detects the presence of negative cycles.
+
+## Files Included
+
+- **Graph.hpp**: Header file defining the Graph class with member functions and operator overloads.
+- **Graph.cpp**: Implementation file for the Graph class, including definitions of member functions and operators.
+- **Algorithms.cpp**: Implementation of various graph algorithms utilizing the Graph class(taken from Task 1 of the course).
+- **Algorithms.hpp**: Header file of Algorithms.c(taken from Task 1 of the course).
+- **TestCounter.cpp, Test.cpp**: Test files for unit testing the Graph class and algorithms.
+- **Demo.cpp**: Demo file showcasing the usage of the Graph class and algorithms.
+
+## Getting Started
+
+### Prerequisites
+
+a C++ compiler
+
+### Build Instructions
+
+Use the provided `Makefile` to build (and run the tests) the project:
+```bash
+make
