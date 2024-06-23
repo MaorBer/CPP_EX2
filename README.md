@@ -1,4 +1,4 @@
-# Graph Operations and Algorithms User Guide
+# Assignment 2 - graphs and operator loading (continuation of Assignment 1)
 
 ## Overview
 
