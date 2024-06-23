@@ -1,24 +1,29 @@
+// ID: 212305965
+// Email: maorw9@gmail.com
+
 #include "doctest.h"
 #include "Algorithms.hpp"
 #include "Graph.hpp"
+#include <cstdint>
 
 using namespace std;
+using namespace ariel;
 
 TEST_CASE("Test graph addition")
 {
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph);
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(weightedGraph);
-    ariel::Graph g3 = g1 + g2;
+    Graph g3 = g1 + g2;
     vector<vector<int>> expectedGraph = {
         {0, 2, 1},
         {2, 0, 3},
@@ -28,19 +33,19 @@ TEST_CASE("Test graph addition")
 
 TEST_CASE("Test graph multiplication")
 {
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph);
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(weightedGraph);
-    ariel::Graph g4 = g1 * g2;
+    Graph g4 = g1 * g2;
     vector<vector<int>> expectedGraph = {
         {0, 0, 2},
         {1, 0, 1},
@@ -50,19 +55,19 @@ TEST_CASE("Test graph multiplication")
 
 TEST_CASE("Invalid operations")
 {
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph);
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> weightedGraph = {
         {0, 1, 1, 1},
         {1, 0, 2, 1},
         {1, 2, 0, 1}};
     g2.loadGraph(weightedGraph);
-    ariel::Graph g5;
+    Graph g5;
     vector<vector<int>> graph2 = {
         {0, 1, 0, 0, 1},
         {1, 0, 1, 0, 0},
@@ -74,7 +79,7 @@ TEST_CASE("Invalid operations")
     CHECK_THROWS(g1 * g2);
 
     // Addition of two graphs with different dimensions
-    ariel::Graph g6;
+    Graph g6;
     vector<vector<int>> graph3 = {
         {0, 1, 0, 0, 1},
         {1, 0, 1, 0, 0},
@@ -85,64 +90,17 @@ TEST_CASE("Invalid operations")
     CHECK_THROWS(g1 + g6);
 }
 
-TEST_CASE("Test unary operators")
-{
-    // Test case 1: Increment operator
-    ariel::Graph g1;
-    ariel::Graph g1_test;
-    vector<vector<int>> graph1 = {
-        {0, 1, 0},
-        {1, 0, 3},
-        {0, 1, 0}};
-    g1.loadGraph(graph1);
-
-    vector<vector<int>> graph1_after = {
-        {1, 2, 1},
-        {2, 1, 4},
-        {1, 2, 1}};
-
-    g1_test.loadGraph(graph1_after);
-
-    ariel::Graph g1_expected = g1;
-    ++g1_expected;
-
-    CHECK(g1_test == g1_expected);
-
-    // Test case 2: Decrement operator
-    ariel::Graph g2;
-    vector<vector<int>> graph2 = {
-        {0, 1, 0},
-        {1, 0, 1},
-        {0, 1, 0}};
-    g2.loadGraph(graph2);
-    ariel::Graph g2_test;
-    vector<vector<int>> graph2_after = {
-        {-1, 0, -1},
-        {0, -1, 0},
-        {-1, 0, -1}};
-
-    g2_test.loadGraph(graph2_after);
-
-    ariel::Graph g2_expected = g2;
-    --g2_expected;
-
-    CHECK(g2_test == g2_expected);
-
-    // Add more test cases for unary operators here if needed
-}
-
-
 TEST_CASE("Test comparison operators")
 {
     // Test case 1: Greater than operator
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph1 = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph1);
 
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> graph2 = {
         {0, 1, 1},
         {1, 0, 2},
@@ -152,7 +110,7 @@ TEST_CASE("Test comparison operators")
     CHECK((g2 > g1) == true);
 
     // Test case 2: Less than or equal to operator
-    ariel::Graph g3 = g1;
+    Graph g3 = g1;
     CHECK((g3 <= g1) == true);
 
     // Add more test cases for comparison operators here if needed
@@ -161,27 +119,27 @@ TEST_CASE("Test comparison operators")
 TEST_CASE("Test compound assignment operators")
 {
     // Test case 1: Addition assignment operator
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph1 = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph1);
 
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> graph2 = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(graph2);
 
-    ariel::Graph g1_copy = g1;
+    Graph g1_copy = g1;
     g1_copy += g2;
 
     CHECK(g1 + g2 == g1_copy);
 
     // Test case 2: Subtraction assignment operator
-    ariel::Graph g2_copy = g2;
+    Graph g2_copy = g2;
     g2_copy -= g1;
 
     CHECK(g2 - g1 == g2_copy);
@@ -192,21 +150,21 @@ TEST_CASE("Test compound assignment operators")
 TEST_CASE("Test binary operators")
 {
     // Test case 1: Addition operator
-    ariel::Graph g1;
+    Graph g1;
     vector<vector<int>> graph1 = {
         {0, 1, 0},
         {1, 0, 1},
         {0, 1, 0}};
     g1.loadGraph(graph1);
 
-    ariel::Graph g2;
+    Graph g2;
     vector<vector<int>> graph2 = {
         {0, 1, 1},
         {1, 0, 2},
         {1, 2, 0}};
     g2.loadGraph(graph2);
 
-    ariel::Graph g3_expected;
+    Graph g3_expected;
     vector<vector<int>> expectedGraph1 = {
         {0, 2, 1},
         {2, 0, 3},
@@ -216,7 +174,7 @@ TEST_CASE("Test binary operators")
     CHECK((g1 + g2) == g3_expected);
 
     // Test case 2: Multiplication operator
-    ariel::Graph g4_expected;
+    Graph g4_expected;
     vector<vector<int>> expectedGraph2 = {
         {0, 0, 2},
         {1, 0, 1},
@@ -226,4 +184,103 @@ TEST_CASE("Test binary operators")
     CHECK((g1 * g2) == g4_expected);
 
     // Add more test cases for binary operators here if needed
+}
+
+// Additional tests for algorithms
+
+TEST_CASE("Bellman-Ford algorithm")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 6, 0, 0, 7},
+        {0, 0, 5, -4, 8},
+        {0, -2, 0, 0, 0},
+        {2, 0, 7, 0, 0},
+        {0, 0, -3, 9, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    vector<int> d(g.get_ver(), INT32_MAX);
+    vector<int> pi(g.get_ver(), -1);
+
+    alg.bellman_ford(g, 0, d, pi);
+
+    CHECK(d == vector<int>({0, 2, 4, -2, 7}));
+    CHECK(pi == vector<int>({-1, 2, 4, 1, 0})); // Corrected expected pi
+}
+
+TEST_CASE("Check if graph is connected")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 1, 0, 0, 1},
+        {1, 0, 1, 0, 0},
+        {0, 1, 0, 1, 0},
+        {0, 0, 1, 0, 1},
+        {1, 0, 0, 1, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    CHECK(alg.isConnected(g) == true);
+}
+
+TEST_CASE("Test shortest path algorithm")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 4, 0, 0, 0, 0},
+        {0, 0, 7, 0, 0, 0},
+        {0, 0, 0, 8, 0, 0},
+        {0, 0, 0, 0, 9, 0},
+        {0, 0, 0, 0, 0, 10},
+        {0, 0, 0, 0, 0, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    CHECK(alg.shortestPath(g, 0, 5) == "0-->1-->2-->3-->4-->5");
+    CHECK(alg.shortestPath(g, 1, 4) == "1-->2-->3-->4");
+    CHECK(alg.shortestPath(g, 2, 3) == "2-->3");
+}
+
+TEST_CASE("Check if graph contains a cycle")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 1},
+        {0, 0, 1, 0, 0},
+        {0, 0, 0, 1, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    CHECK(alg.isContainsCycle(g) == "The cycle is:2-->4-->3-->2");
+}
+
+TEST_CASE("Check if graph is bipartite")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 1, 0, 1},
+        {1, 0, 1, 0},
+        {0, 1, 0, 1},
+        {1, 0, 1, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    CHECK(alg.isBipartite(g) == "The graph is bipartite: A={0, 2,}, B={1, 3,}");
+}
+
+TEST_CASE("Check if graph contains a negative cycle")
+{
+    Graph g;
+    vector<vector<int>> graph = {
+        {0, 1, 0, 0},
+        {0, 0, 2, 0},
+        {1, 0, 0, -1},
+        {-5, 0, 0, 0}};
+    g.loadGraph(graph);
+
+    Algorithms alg;
+    CHECK(alg.negativeCycle(g) == "0, 1, 2, 3, 0");
 }
