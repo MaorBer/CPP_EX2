@@ -56,7 +56,7 @@ bool Algorithms::isConnected(Graph g)
         for (size_t i = 0; i < g.get_ver(); i++)
         {
             if (d[i] == INT32_MAX)
-                return false; 
+                return false;
         }
     }
     return true;
@@ -71,7 +71,7 @@ std::string Algorithms::shortestPath(Graph g, size_t src, size_t dest)
     bellman_ford(g, src, d, pi);
     if (d[dest] == INT32_MIN)
     {
-        return "There is a negative cycle"; 
+        return "There is a negative cycle";
     }
     if (pi[dest] == -1)
     {
@@ -82,7 +82,7 @@ std::string Algorithms::shortestPath(Graph g, size_t src, size_t dest)
     while (t != src)
     {
         str = std::to_string(pi[(size_t)t]) + "-->" + str;
-        t = pi[(size_t)t];             
+        t = pi[(size_t)t];
     }
     return str;
 }
@@ -116,7 +116,6 @@ size_t Algorithms::dfs_v(Graph g, size_t u, std::vector<size_t> &pi, std::vector
     return SIZE_MAX;
 }
 
-
 string Algorithms::isContainsCycle(Graph g)
 {
     string str = "0";
@@ -147,7 +146,6 @@ string Algorithms::isContainsCycle(Graph g)
     }
     return str;
 }
-
 
 bool Algorithms::dfs_c(Graph g, size_t u, vector<int> &colors)
 {
@@ -186,7 +184,7 @@ std::string Algorithms::isBipartite(Graph g)
         {
             continue;
         }
-        
+
         // Initialize color for the current vertex
         colors[i] = 1;
         setA += std::to_string(i) + ", ";
@@ -220,8 +218,10 @@ std::string Algorithms::isBipartite(Graph g)
     }
 
     // Remove trailing comma and space
-    if (!setA.empty()) setA.pop_back(); 
-    if (!setB.empty()) setB.pop_back();
+    if (!setA.empty())
+        setA.pop_back();
+    if (!setB.empty())
+        setB.pop_back();
 
     // Close sets
     setA += "}";
@@ -229,7 +229,6 @@ std::string Algorithms::isBipartite(Graph g)
 
     return "The graph is bipartite: A=" + setA + ", B=" + setB;
 }
-
 
 string Algorithms::negativeCycle(Graph g)
 {
