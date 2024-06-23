@@ -25,6 +25,12 @@ The repository also includes implementations of several fundamental graph algori
 - **Bipartiteness Check**: Checks if the graph is bipartite.
 - **Negative Cycle Detection**: Detects the presence of negative cycles.
 
+
+## Author
+
+- **ID**: 212305965
+- **Email**: maorw9@gmail.com
+
 ## Files Included
 
 - **Graph.hpp**: Header file defining the Graph class with member functions and operator overloads.
@@ -45,3 +51,7 @@ a C++ compiler
 Use the provided `Makefile` to build (and run the tests) the project:
 ```bash
 make
+
+
+
+
